@@ -42,10 +42,13 @@ mongoose.connection.on("error", (err) => {
 
 app.use(cookieParser());
 
-app.use(cors({
-  origin: "http://localhost:3000",
+
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://finvision-51433.web.app"],
   credentials: true,
-}));
+};
+
+app.use(cors(corsOptions));
 
 // Add below app.use(cors())
 app.use(session({
@@ -75,14 +78,14 @@ app.post("/api/predict-stock", async (req, res) => {
   const { symbol } = req.body;
 
   try {
-    const histRes = await axios.get("http://localhost:5000/api/historical", {
+    const histRes = await axios.get("https://finvision-51433.web.app/api/historical", {
       params: { symbol }
     });
 
     const prices = histRes.data.map(p => parseFloat(p.price));
     const last3 = prices.slice(-3); // feature: last 3 hourly prices
 
-    const predictionRes = await axios.post("http://localhost:6000/predict", {
+    const predictionRes = await axios.post("https://finvision-backend-1.onrender.com/predict", {
       features: last3
     });
 

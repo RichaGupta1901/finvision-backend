@@ -6,7 +6,7 @@ import numpy as np
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+CORS(app, supports_credentials=True, origins=["https://finvision-51433.web.app"])
 
 models = {}
 scalers = {}
